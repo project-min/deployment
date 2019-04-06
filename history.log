@@ -1,0 +1,225 @@
+    1  hostnamectl
+    2  shutdown now
+    3  hostnamectl
+    4  shutdown now
+    5  yum update -y
+    6  yum upgrade -y
+    7  yum install vim -y
+    8  yum install wget -y
+    9  yum install net-tools -y
+   10  yum install lsof -y
+   11  yum install git -y
+   12  yum install gcc* -y
+   13  yum install make* -y
+   14  yum install make -y
+   15  ls -al /usr/lib | grep libevent
+   16  shutdown now
+   17  ls
+   18  cd /homw
+   19  cd /home
+   20  ls
+   21  mkdir download
+   22  cd /opt
+   23  ls
+   24  yum install libevent -y
+   25  wget https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   26  ls
+   27  tar xzf V1.0.39.tar.gz 
+   28  ls
+   29  cd libfastcommon-1.0.39/
+   30  ./make.sh
+   31  yum install gcc* -y
+   32  ./make.sh install
+   33  ls
+   34  cd ..
+   35  ls
+   36  wget https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   37  ls
+   38  tar -zxvf V5.11.tar.gz
+   39  ls
+   40  rm -rf V5.11.tar.gz.1
+   41  rm -rf V5.11.tar.gz
+   42  rm -rf fastdfs-5.11/
+   43  ls
+   44  wget https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   45  tar -zxvf V5.11.tar.gz
+   46  cd fastdfs-5.11/
+   47  ./make.sh
+   48  ./make.sh install
+   49  ./make.sh
+   50  ./make.sh install
+   51  cd /etc/
+   52  ls
+   53  cd fdfs
+   54  ls
+   55  cp tracker.conf.sample tracker.conf
+   56  vim tracker.conf
+   57  ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+   58  ln -s /usr/bin/stop.sh /usr/local/bin
+   59  ln -s /usr/bin/restart.sh /usr/local/bin
+   60  service fdfs_trackerd start
+   61  netstat -unltp|grep fdfs
+   62  service fdfs_trackerd start
+   63  netstat -unltp|grep fdfs
+   64  service fdfs_trackerd start
+   65  netstat
+   66  netstat -unltp|grep fdfs
+   67  ls
+   68  cd /
+   69  mkdir data
+   70  cd data
+   71  mkdir fastdfs
+   72  service fdfs_trackerd start
+   73  netstat -unltp|grep fdfs
+   74  cd /etc/fdfs
+   75  ls
+   76  cp storage.conf.sample storage.conf
+   77  vim storage.conf
+   78  ifconfig
+   79  shutdown now
+   80  ifconfig
+   81  cd /etc/fdfs/
+   82  ls
+   83  vim storage.conf
+   84  ifconfig
+   85  vim storage.conf
+   86  ln -s /usr/bin/fdfs_storaged /usr/local/bin
+   87  service fdfs_storaged start
+   88  cd /data
+   89  ls
+   90  cd fastdfs/
+   91  ls
+   92  mkdir storage
+   93  service fdfs_storaged start
+   94  service fdfs_trackerd start
+   95  netstat -unltp|grep fdfs
+   96  /usr/bin/fdfs_monitor /etc/fdfs/storage/conf
+   97  /usr/bin/fdfs_monitor /etc/fdfs/storage.conf
+   98  /usr/bin/fdfs_monitor /etc/fdfs/storage.conf | less
+   99  shutdown now
+  100  cd /opt
+  101  ls
+  102  wget -c https://nginx.org/download/nginx-1.14.1.tar.gz
+  103  wget https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip
+  104  yum install unzip -y
+  105  unzip master.zip 
+  106  ls
+  107  llllllllls
+  108  ls
+  109  tttttttttar xvf nginx-1.14.1.tar.gz 
+  110  tar xvf nginx-1.14.1.tar.gz 
+  111  cd nginx-1.14.1
+  112  ls
+  113  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+  114  yum install pcre -y
+  115  yum install pcre-devel -y
+  116  yum install zlib -y
+  117  yum install openssl -y
+  118  yum install zlib-devel -y
+  119  yum install zlib -y
+  120  yum install openssl-devel -y
+  121  yum install -y openssl
+  122  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+  123  ./make
+  124  ./make.sh
+  125  /usr/local/nginx/sbin/nginx -V
+  126  /usr/local/
+  127  cd /usr
+  128  cd local
+  129  ls
+  130  cd /opt
+  131  cd nginx-1.14.1
+  132  ls
+  133  cd ..
+  134  ls
+  135  cd nginx-1.14.1
+  136  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+  137  cd /usr/local/nginx
+  138  make
+  139  cd ..
+  140  cd fastdfs-nginx-module-master/
+  141  ;s
+  142  ls
+  143  cd src
+  144  ls
+  145  vim config
+  146  cd ..
+  147  ls
+  148  cd nginx-1.14.1
+  149  make
+  150  cd /usr/include
+  151  ls
+  152  cd fastdfs
+  153  ls
+  154  cd ..
+  155  cd fastcommon
+  156  ls
+  157  cd ..
+  158  cd /opt
+  159  ls
+  160  cd nginx-1.14.1
+  161  ls
+  162  make
+  163  cd ..
+  164  cd fastdfs-nginx-module-master/
+  165  cd src
+  166  vim config 
+  167  cd ..
+  168  cd nginx-1.14.1
+  169  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+  170  make
+  171  make install
+  172  /usr/local/nginx/sbin/nginx -V
+  173  shutdown now
+  174  cd /opt/fastdfs-nginx-module-master/
+  175  cd src
+  176  vim mod_fastdfs.conf 
+  177  ifconfig
+  178  vim mod_fastdfs.conf 
+  179  cp mod_fastdfs.conf /etc/fdfs
+  180  vim mod_fastdfs.conf 
+  181  cd ..
+  182  cd fastdfs-5.11/conf/
+  183  cp anti-steal.jpg mime.types /etc/fdfs
+  184  cd /usr/local/nginx/conf
+  185  vim nginx.conf
+  186  nginx -V
+  187  /usr/local/nginx/sbin/nginx -V
+  188  vim nginx.conf
+  189  mkdir /data/fastdfs/storage/data/group1
+  190  ln -s /data/fastdfs/storage/data /data/fastdfs/storage/data/group1/M00
+  191  /usr/local/nginx/sbin/nginx
+  192  vim /etc/sysconfig/iptables
+  193  service iptables restart
+  194  yum install iptables -y
+  195  iptables
+  196  iptables -h
+  197  iptables -L
+  198  cd /etc//sysconfig/iptables
+  199  cd /etc/sysconfig/
+  200  ls
+  201  vim iptables
+  202  rm iptables
+  203  ls
+  204  firewall-cmd --zone=public --add-port=80/tcp --permanent
+  205  firewall-cmd --reload
+  206  nginx
+  207  /usr/local/nginx/sbin/nginx
+  208  ls
+  209  cd home
+  210  ls
+  211  cd /home
+  212  ls
+  213  mkdir github
+  214  cd github
+  215  git init
+  216  git config --global user.name "Ye Min"
+  217  git config --global user.email project.min@outlook.com
+  218  git --version
+  219  git remote add origin https://github.com/project-min/deployment.git
+  220  git pull origin master
+  221  git remote -v
+  222  git pull origin master
+  223  git pull master origin
+  224  git pull origin master
+  225  history >> history.log
