@@ -9,7 +9,14 @@ yum install lsof -y
 yum install git -y
 yum install gcc* -y
 yum install make* -y
+yum install unzip -y
 yum install libevent -y
+yum install pcre -y
+yum install pcre-devel -y
+yum install zlib -y
+yum install zlib-devel -y
+yum install openssl -y
+yum install openssl-devel -y
 
 # Download
 wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
@@ -29,7 +36,7 @@ cd /
 cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
 
 #vim tracker.conf
-sed -i '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' /etc/fdfs/tracker.conf
+sed -i '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/tracker/g' /etc/fdfs/tracker.conf
 sed -i '260s/http.server_port=8080/http.server_port=80/g' /etc/fdfs/tracker.conf
 #For MacOS
 #sed -i '' '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' /etc/fdfs/tracker.conf
@@ -40,6 +47,7 @@ ln -s /usr/bin/restart.sh /usr/local/bin
 
 mkdir /data
 mkdir /data/fastdfs
+mkdir /data/fastdfs/tracker
 mkdir /data/fastdfs/storage
 
 cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
@@ -59,9 +67,6 @@ service fdfs_trackerd start
 service fdfs_storaged start
 netstat -unltp|grep fdfs
 
-
-# MacOS
-#sed -i '' '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' tracker.conf 
-# Linux
-#sed -i s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' tracker.conf 
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --reload
 
