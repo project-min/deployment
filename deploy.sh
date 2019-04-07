@@ -14,13 +14,17 @@ yum install libevent -y
 # Download
 wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
 tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+cd /opt/libfastcommon-1.0.39
 /opt/libfastcommon-1.0.39/make.sh
 /opt/libfastcommon-1.0.39/make.sh install
+cd /
 
 wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
 tar -zxvf V5.11.tar.gz -C /opt
+cd /opt/fastdfs-5.11
 /opt/fastdfs-5.11/make.sh
 /opt/fastdfs-5.11/make.sh install
+cd /
 
 cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
 
