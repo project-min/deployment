@@ -29,8 +29,11 @@ cd /
 cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
 
 #vim tracker.conf
-sed -i '' '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' /etc/fdfs/tracker.conf
-sed -i '' '260s/http.server_port=8080/http.server_port=80/g' /etc/fdfs/tracker.conf
+sed -i '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' /etc/fdfs/tracker.conf
+sed -i '260s/http.server_port=8080/http.server_port=80/g' /etc/fdfs/tracker.conf
+#For MacOS
+#sed -i '' '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs/g' /etc/fdfs/tracker.conf
+#sed -i '' '260s/http.server_port=8080/http.server_port=80/g' /etc/fdfs/tracker.conf
 ln -s /usr/bin/fdfs_trackerd /usr/local/bin
 ln -s /usr/bin/stop.sh /usr/local/bin
 ln -s /usr/bin/restart.sh /usr/local/bin
@@ -46,9 +49,13 @@ cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
 
 #vim storage.conf
 IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
-sed -i '' '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-sed -i '' '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-sed -i '' '118s/tracker_server=192.168.209.121:22122/tracker_server=$IP_ADDRESS:22122/g' /etc/fdfs/storage.conf
+sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+sed -i '118s/tracker_server=192.168.209.121:22122/tracker_server=$IP_ADDRESS:22122/g' /etc/fdfs/storage.conf
+#For MacOS
+#sed -i '' '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#sed -i '' '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#sed -i '' '118s/tracker_server=192.168.209.121:22122/tracker_server=$IP_ADDRESS:22122/g' /etc/fdfs/storage.conf
 ln -s /usr/bin/fdfs_storaged /usr/local/bin
 
 service fdfs_trackerd start
