@@ -42,9 +42,6 @@ mkdir /data
 mkdir /data/fastdfs
 mkdir /data/fastdfs/storage
 
-service fdfs_trackerd start
-netstat -unltp|grep fdfs
-
 cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
 
 #vim storage.conf
