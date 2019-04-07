@@ -14,7 +14,6 @@ yum install libevent -y
 # Download
 wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
 tar -zxvf /opt/V1.0.39.tar.gz -C /opt
-cd libfastcommon-1.0.39/
 /opt/libfastcommon-1.0.39/make.sh
 /opt/libfastcommon-1.0.39/make.sh install
 
@@ -40,6 +39,7 @@ service fdfs_trackerd start
 netstat -unltp|grep fdfs
 
 cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
+
 #vim storage.conf
 IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
 sed -i '' '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
