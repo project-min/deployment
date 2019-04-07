@@ -1,0 +1,98 @@
+    1  hostnamectl
+    2  shutdown now
+    3  hostnamectl
+    4  shutdown now
+    5  yum install git -y
+    6  mkdir /home/github
+    7  cd /home/github/
+    8  git init
+    9  git remote add origin https://github.com/project-min/deployment.git
+   10  git pull origin master
+   11  chmod 777 deploy.sh
+   12  shutdown now
+   13  cd /home/github/
+   14  ./deploy.sh
+   15  netstat -unltp|grep fdfs
+   16  vim /etc/fdfs/storage.conf
+   17  ifconfig
+   18  shutdown now
+   19  cd /etc/fdfs
+   20  vim tracker.conf
+   21  vim storage.conf
+   22  cd data
+   23  cd /data
+   24  ls
+   25  cd fastdfs/
+   26  ls
+   27  mkdir tracker
+   28  cd /etc
+   29  ls
+   30  cd fdfs
+   31  vim tracker.conf
+   32  netstat -unltp|grep fdfs
+   33  service fdfs_trackerd start
+   34  service fdfs_storaged start
+   35  netstat -unltp|grep fdfs
+   36  ifconfig
+   37  cp /etc/fdfs/client.conf.sample /etc/fdfs/client.conf
+   38  vim client.conf
+   39  cd /usr
+   40  cd local
+   41  ls
+   42  cd src
+   43  ls
+   44  vim ppp.txt
+   45  ls
+   46  /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /usr/local/src/ppp.txt
+   47  cd /opt
+   48  ls
+   49  wget -P /opt -c https://nginx.org/download/nginx-1.14.1.tar.gz
+   50  wget -P /opt https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip
+   51  ls
+   52  unzip /opt/master.zip -d /opt
+   53  yum install unzip -y
+   54  unzip /opt/master.zip -d /opt
+   55  ls
+   56  tttttttttar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   57  tar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   58  ls
+   59  cd fastdfs-nginx-module-master/
+   60  cd src
+   61  vim config
+   62  sed -i '6s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   63  vim config
+   64  sed -i '15s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   65  vim config
+   66  yum install automake -y
+   67  yum install autoconf -y
+   68  yum install libtool -y
+   69  cd /opt/nginx-1.14.1
+   70  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+   71  yum install pcre* -y
+   72  yum install zlib -y
+   73  yum install openssl -y
+   74  yum install zlib-devel -y
+   75  yum install openssl-devel -y
+   76  yum install openssl -y
+   77  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+   78  make
+   79  make install
+   80  nginx -V
+   81  cp /opt/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs
+   82  vim /etc/fdfs/mod_fastdfs.conf 
+   83  cd /opt/fastdfs-5.11/
+   84  cd conf/
+   85  ls
+   86  cp http.conf mime.types /etc/fdfs/
+   87  ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+   88  cd /
+   89  vim /usr/local/nginx/conf/nginx.conf
+   90  /usr/local/nginx/sbin/nginx
+   91  vim /usr/local/nginx/conf/nginx.conf
+   92  /usr/local/nginx/sbin/nginx
+   93  firewall-cmd --zone=public --add-port=8888/tcp --permanent
+   94  firewall-cmd --reload
+   95  cd /home/github/
+   96  ls
+   97  history -> history2.log
+   98  history > history2.log
