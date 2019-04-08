@@ -17,6 +17,9 @@ yum install zlib -y
 yum install zlib-devel -y
 yum install openssl -y
 yum install openssl-devel -y
+yum install automake -y
+yum install autoconf -y
+yum install libtool -y
 
 # Download
 wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz

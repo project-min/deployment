@@ -1,8 +1,8 @@
 cp /etc/fdfs/client.conf.sample /etc/fdfs/client.conf
-#vim client.conf
-#base_path=/data/fastdfs/tracker
-#tracker_server=$IP_ADDRESS:22122
-
+#vim /etc/fdfs/client.conf
+IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
+sed -i '10s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/tracker/g' /etc/fdfs/client.conf
+sed -i "14s/tracker_server=192.168.0.197:22122/tracker_server=$IP_ADDRESS:22122/g" /etc/fdfs/client.conf
 
 #cd /usr/local/src
 #vim ppp.txt
