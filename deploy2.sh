@@ -24,11 +24,9 @@ make install
 
 cp /opt/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs
 #vim /etc/fdfs/mod_fastdfs.conf
-#tracker_server=ip01:22122
-#storage_server_port=23000
-#group_name=group1
-#url_have_group_name = true
-#store_path0=/fastdfs/storage
+sed -i "40s/tracker:22122/$IP_ADDRESS:22122/g" /etc/fdfs/mod_fastdfs.conf
+sed -i '53s/false/true/g' /etc/fdfs/mod_fastdfs.conf
+sed -i '62s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/storage/g' /etc/fdfs/mod_fastdfs.conf
 
 cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
 cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
@@ -36,12 +34,10 @@ cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
 ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
 
 #vim /usr/local/nginx/conf/nginx.conf
-#listen 8888;
-#location ~/group([0-9])/M00 {
-#
-#    ngx_fastdfs_module;
-#
-#}
+sed -i "36s/80/8888/g" /usr/local/nginx/conf/nginx.conf
+sed -i "43s/\//~\/group([0-9])\/M00/g" /usr/local/nginx/conf/nginx.conf
+sed -i "44s/root   html;/ngx_fastdfs_module;/g" /usr/local/nginx/conf/nginx.conf
+sed -i "45d" /usr/local/nginx/conf/nginx.conf
 
 /usr/local/nginx/sbin/nginx
 
