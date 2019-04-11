@@ -152,6 +152,13 @@ firewall-cmd --reload
 firewall-cmd --zone=public --add-port=8888/tcp --permanent
 firewall-cmd --reload
 
+firewall-cmd --zone=public --add-port=22122/tcp --permanent
+firewall-cmd --reload
+
+firewall-cmd --zone=public --add-port=23000/tcp --permanent
+firewall-cmd --reload
+
+
 /usr/local/nginx/sbin/nginx
 
 netstat -unltp|grep fdfs
