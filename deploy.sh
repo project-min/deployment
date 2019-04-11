@@ -107,6 +107,9 @@ if [ ! -f "/etc/fdfs/mime.types" ]; then
   cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
 fi
 
+service fdfs_trackerd start
+service fdfs_storaged start
+
 # Install nginx
 if [ ! -d "/opt/fastdfs-nginx-module-master" ]; then
   wget -P /opt https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip
@@ -148,3 +151,8 @@ firewall-cmd --reload
 
 firewall-cmd --zone=public --add-port=8888/tcp --permanent
 firewall-cmd --reload
+
+/usr/local/nginx/sbin/nginx
+
+netstat -unltp|grep fdfs
+
