@@ -6,7 +6,7 @@ yum install mysql-community-server -y
 service mysqld start
 service mysqld status
 
-userid=`root`
+userid='root'
 temporary_password_string=`grep "temporary password" /var/log/mysqld.log`
 temporary_password=${temporary_password_string##* }
 if [ x"$1" = x ]; then
