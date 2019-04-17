@@ -1,0 +1,79 @@
+    1  hostnamectl
+    2  shutdown now
+    3  hostnamectl
+    4  shutdown now
+    5  yum install git -y
+    6  mkdir /home/deployment
+    7  cd /home/deployment/
+    8  git init
+    9  git remote add origin https://github.com/project-min/deployment.git
+   10  git pull origin master
+   11  chmod 777 deploy.sh 
+   12  vim deploy.sh 
+   13  yum install vim -y
+   14  vim deploy.sh 
+   15  ./deploy.sh 
+   16  iiiiiiiiifconfig
+   17  ifconfig
+   18  exit
+   19  shutdown now
+   20  yum search kafka
+   21  cd /opt/
+   22  ls
+   23  yum search java
+   24  yum search java|grep -i --color JDK
+   25  yum install java-1.8.0-openjdk -y
+   26  yum search java|grep -i --color JDK
+   27  yum install java-1.8.0-openjdk
+   28  java -version
+   29  hg clone
+   30  yum install hg
+   31  yum install java-1.8.0-openjdk -y
+   32  yum -y install mercurial
+   33  shutdown now
+   34  cd /opt
+   35  ls
+   36  cd kafka_2.12-2.2.0
+   37  ls
+   38  cd config/
+   39  vim server.properties 
+   40  vim zookeeper.properties 
+   41  ls
+   42  cd ..
+   43  ls
+   44  cd bin
+   45  zookeeper-server-start.sh ../config/zookeeper.properties 
+   46  ./zookeeper-server-start.sh ../config/zookeeper.properties 
+   47  cd ..
+   48  bin/zookeeper-server-start.sh -daemon config/zookeeper.properties 
+   49  bin/kafka-server-start.sh config/server.properties 
+   50  bin/kafka-server-start.sh config/server.properties &
+   51  systemctl start kafka
+   52  vi /etc/systemd/system/zookeeper.service
+   53  pwd
+   54  shutdown now
+   55  cd /opt
+   56  ls
+   57  cd /home/
+   58  cd /opt
+   59  mv kafka_2.12-2.2.0 kafka
+   60  ls
+   61  cd /home/deployment/
+   62  git pull origin master
+   63  lllllllllls
+   64  ls
+   65  ls -al
+   66  cp zookeeper.service /etc/systemd/system/
+   67  cp kafka.service /etc/systemd/system/
+   68  cd /etc/systemd/system
+   69  ls
+   70  ls -al
+   71  systemctl start zookeeper.service 
+   72  systemctl start kafka.service 
+   73  systemctl start kafka
+   74  systemctl start kafka1
+   75  systemctl start zookeeper
+   76  journalctl -u kafka
+   77  /opt/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor
+   78  shutdown now
+   79  history > kafka-history.log
