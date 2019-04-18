@@ -1,4 +1,25 @@
 #!/bin/bash
+# Install package
+yum update -y
+yum upgrade -y
+yum install vim -y
+yum install wget -y
+yum install net-tools -y
+yum install lsof -y
+yum install git -y
+yum install gcc* -y
+yum install make* -y
+yum install unzip -y
+yum install libevent -y
+yum install pcre -y
+yum install pcre-devel -y
+yum install zlib -y
+yum install zlib-devel -y
+yum install openssl -y
+yum install openssl-devel -y
+yum install automake -y
+yum install autoconf -y
+yum install libtool -y
 
 IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
 
@@ -15,9 +36,9 @@ if [ ! -d "/data/fastdfs/tracker" ]; then
   mkdir /data/fastdfs/tracker
 fi
 
-if [ ! -d "/data/fastdfs/storage" ]; then
-  mkdir /data/fastdfs/storage
-fi
+#if [ ! -d "/data/fastdfs/storage" ]; then
+#  mkdir /data/fastdfs/storage
+#fi
 
 # Install libfastcommon-1.0.39
 if [ ! -d "/opt/libfastcommon-1.0.39/" ]; then
@@ -50,19 +71,19 @@ if [ ! -f "/etc/fdfs/tracker.conf" ]; then
   #sed -i '' '260s/http.server_port=8080/http.server_port=80/g' /etc/fdfs/tracker.conf
 fi
 
-# Update storage.conf
-if [ ! -f "/etc/fdfs/storage.conf" ]; then
-  cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
-  # vim storage.conf
-  sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  sed -i '118d' /etc/fdfs/storage.conf
-  sed -i "118i tracker_server=$IP_ADDRESS:22122" /etc/fdfs/storage.conf
-  # For MacOS
-  #sed -i '' '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  #sed -i '' '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  #sed -i '' "118s/tracker_server=192.168.209.121:22122/tracker_server=$IP_ADDRESS:22122/g" /etc/fdfs/storage.conf
-fi
+## Update storage.conf
+#if [ ! -f "/etc/fdfs/storage.conf" ]; then
+#  cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
+#  # vim storage.conf
+#  sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  sed -i '118d' /etc/fdfs/storage.conf
+#  sed -i "118i tracker_server=$IP_ADDRESS:22122" /etc/fdfs/storage.conf
+#  # For MacOS
+#  #sed -i '' '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  #sed -i '' '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  #sed -i '' "118s/tracker_server=192.168.209.121:22122/tracker_server=$IP_ADDRESS:22122/g" /etc/fdfs/storage.conf
+#fi
 
 ln -s /usr/bin/fdfs_trackerd /usr/local/bin
 ln -s /usr/bin/stop.sh /usr/local/bin
@@ -87,7 +108,7 @@ if [ ! -f "/etc/fdfs/mime.types" ]; then
 fi
 
 service fdfs_trackerd start
-service fdfs_storaged start
+#service fdfs_storaged start
 
 # Install nginx
 if [ ! -d "/opt/fastdfs-nginx-module-master" ]; then
@@ -122,7 +143,7 @@ fi
 #vim ppp.txt
 #/usr/bin/fdfs_upload_file /etc/fdfs/client.conf /usr/local/src/ppp.txt
 
-ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+#ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
 
 
 firewall-cmd --zone=public --add-port=80/tcp --permanent
