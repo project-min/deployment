@@ -21,5 +21,5 @@ yum install automake -y
 yum install autoconf -y
 yum install libtool -y
 
-yum install java-1.8.0-openjdk
+yum install java-1.8.0-openjdk -y
 yum install java-1.8.0-openjdk-devel -y
