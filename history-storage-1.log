@@ -1,0 +1,155 @@
+    1  exit
+    2  yum install -y
+    3  yum install git -y
+    4  mkdir /home/deployment
+    5  cd /home/deployment
+    6  git init
+    7  git remote add origin https://github.com/project-min/deployment.git
+    8  git pull origin master
+    9  chmod 777 *.sh
+   10  cd /home/deployment/
+   11  ./centos.sh 
+   12  mkdir /data
+   13  mkdir /data/fastdfs
+   14  mkdir /data/fastdfs/storage
+   15  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   16  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   17  cd /opt/libfastcommon-1.0.39
+   18  /opt/libfastcommon-1.0.39/make.sh
+   19  /opt/libfastcommon-1.0.39/make.sh install
+   20  cd /
+   21  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   22  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   23  cd /opt/fastdfs-5.11
+   24  /opt/fastdfs-5.11/make.sh
+   25  /opt/fastdfs-5.11/make.sh install
+   26  cd /
+   27  cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
+   28  vim /etc/fdfs/storage.conf
+   29  sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+   30  sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+   31  vim /etc/fdfs/storage.conf
+   32  ln -s /usr/bin/fdfs_storaged /usr/local/bin
+   33  fdfs_storaged /etc/fdfs/storage.conf restart
+   34  cat /root/fastdfs/logs/storaged.log
+   35  mkdir /data/fastdfs/storage
+   36  ps -ef|grep fdfs
+   37  netstat -unltp | grep fdfs
+   38  cat /data/fastdfs/storage/logs/storaged.log 
+   39  fdfs_monitor /etc/fdfs/storage.conf
+   40  wget -P /opt https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip
+   41  unzip /opt/master.zip -d /opt
+   42  sed -i '6s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   43  sed -i '15s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   44  cp /opt/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs
+   45  vim /etc/fdfs/mod_fastdfs.conf
+   46  wget -P /opt -c https://nginx.org/download/nginx-1.14.1.tar.gz
+   47  cd /opt
+   48  ls
+   49  tar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   50  cd /opt/nginx-1.14.1
+   51  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+   52  make
+   53  make install
+   54  /usr/local/nginx/sbin/nginx -V
+   55  vim /etc/fdfs/mod_fastdfs.conf
+   56  ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+   57  vim /usr/local/nginx/conf/nginx.conf
+   58  cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
+   59  cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
+   60  vim/opt/fastdfs-nginx-module-master/src/config
+   61  vim /opt/fastdfs-nginx-module-master/src/config
+   62  vim /etc/fdfs/mod_fastdfs.conf
+   63  vim /etc/fdfs/storage.conf
+   64  vim /usr/local/nginx/conf/nginx.conf
+   65  vim /etc/fdfs/mod_fastdfs.conf
+   66  systemctl start firewalld
+   67  firewall-cmd --zone=public --add-port=23000/tcp --permanent
+   68  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   69  firewall-cmd --reload
+   70  usr/local/nginx/sbin/nginx
+   71  /usr/local/nginx/sbin/nginx
+   72  netstat -unltp | grep nginx
+   73  reboot now
+   74  vim /etc/fdfs/storage.conf
+   75  vim /etc/fdfs/mod_fastdfs.conf
+   76  vim /usr/local/nginx/conf/nginx.conf
+   77  fdfs_storaged /etc/fdfs/storage.conf start
+   78  netstat -unltp | grep fdfs
+   79  cat data/fastdfs/storage/logs/storaged.log
+   80  fdfs_storaged
+   81  fdfs_storaged /etc/fdfs/storage.conf restart
+   82  netstat -unltp | grep fdfs
+   83  fdfs_monitor /etc/fdfs/storage.conf
+   84  reboot now
+   85  fdfs_storaged /etc/fdfs/storage.conf restart
+   86  netstat -unltp | grep fdfs
+   87  ln -s /usr/bin/fdfs_storaged /usr/local/bin
+   88  ifconfig
+   89  service fdfs_storaged start
+   90  cd /data/fastdfs/storage/
+   91  ls
+   92  cd logs
+   93  ls
+   94  vim storaged.log 
+   95  ping 39.98.214.72
+   96  service fdfs_storaged start
+   97  netstat -unltp | grep fdfs
+   98  fdfs_monitor /etc/fdfs/storage.conf
+   99  reboot now
+  100  fdfs_storaged /etc/fdfs/storage.conf start
+  101  netstat -unltp | grep fdfs
+  102  /usr/local/nginx/sbin/nginx
+  103  netstat -unltp | grep nginx
+  104  fdfs_monitor /etc/fdfs/storage.conf
+  105  cd /data/fastdfs/storage/
+  106  ls
+  107  cd data/
+  108  ls
+  109  cd 00/
+  110  ls
+  111  cd 00
+  112  ls
+  113  cd 01
+  114  ls
+  115  cd ..
+  116  cd 01
+  117  ls
+  118  cd ..
+  119  ls
+  120  ls -al
+  121  vim storage_stat.dat 
+  122  cd 00
+  123  ls
+  124  cd 00
+  125  ls
+  126  reboot now
+  127  fdfs_storaged /etc/fdfs/storage.conf restart
+  128  netstat -unltp | grep fdfs
+  129  fdfs_monitor /etc/fdfs/storage.conf
+  130  cd /data/fastdfs/storage/data/
+  131  ls
+  132  cd ..
+  133  cd data/
+  134  cd 00
+  135  ls
+  136  cd 00
+  137  ls
+  138  /usr/local/nginx/sbin/nginx
+  139  ls
+  140  /usr/local/nginx/sbin/nginx -s reload
+  141  vim /etc/fdfs/mod_fastdfs.conf
+  142  vim /usr/local/nginx/conf/nginx.conf
+  143  fdfs_storaged /etc/fdfs/storage.conf restart
+  144  /usr/local/nginx/sbin/nginx reload -s
+  145  /usr/local/nginx/sbin/nginx
+  146  reboot now
+  147  fdfs_storaged /etc/fdfs/storage.conf restart
+  148  netstat -unltp | grep fdfs
+  149  /usr/local/nginx/sbin/nginx
+  150  cd /data/fastdfs/storage/data/
+  151  ls
+  152  cd 00
+  153  ls
+  154  history 
+  155  history >> history-storage-1.log
