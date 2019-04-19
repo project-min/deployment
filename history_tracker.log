@@ -1,0 +1,81 @@
+    1  exit
+    2  exit
+    3  yum install git -y
+    4  mkdir /home/deployment
+    5  cd /home/deployment
+    6  git init
+    7  git remote add origin https://github.com/project-min/deployment.git
+    8  git pull origin master
+    9  chmod 777 *.sh
+   10  ls
+   11  cd /home/deployment/
+   12  ls
+   13  ./centos.sh 
+   14  IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
+   15  echo $IP_ADDRESS
+   16  ifconfig
+   17  mkdir /data
+   18  mkdir /data/fastdfs
+   19  mkdir /data/fastdfs/tracker
+   20  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   21  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   22  cd /opt/libfastcommon-1.0.39
+   23  /opt/libfastcommon-1.0.39/make.sh
+   24  /opt/libfastcommon-1.0.39/make.sh install
+   25  cd /
+   26  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   27  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   28  cd /opt/fastdfs-5.11
+   29  /opt/fastdfs-5.11/make.sh
+   30  /opt/fastdfs-5.11/make.sh install
+   31  cd /
+   32  cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
+   33  sed -i '22s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/tracker/g' /etc/fdfs/tracker.conf
+   34  vim /etc/fdfs/tracker.conf
+   35  ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+   36  vim /usr/bin/stop.sh
+   37  fdfs_trackerd /etc/fdfs/tracker.conf restart
+   38  ps -ef|grep fdfs
+   39  netstat -unltp | grep fdfs
+   40  wget -P /opt -c https://nginx.org/download/nginx-1.14.1.tar.gz
+   41  cd /usr/local
+   42  ls
+   43  cd /opt
+   44  ls
+   45  tar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   46  ls
+   47  cd /opt/nginx-1.14.1
+   48  ./configure
+   49  make
+   50  make install
+   51  vim /usr/local/nginx/conf/nginx.conf
+   52  vim /etc/fdfs/tracker.conf
+   53  vim /usr/local/nginx/conf/nginx.conf
+   54  vim /etc/fdfs/tracker.conf
+   55  firewall-cmd --zone=public --add-port=22122/tcp --permanent
+   56  systemctl start firewalld
+   57  firewall-cmd --zone=public --add-port=22122/tcp --permanent
+   58  firewall-cmd --zone=public --add-port=80/tcp --permanent
+   59  firewall-cmd --reload
+   60  /usr/local/nginx/sbin/nginx
+   61  netstat -unltp | grep nginx
+   62  vim /etc/fdfs/tracker.conf
+   63  vim /usr/local/nginx/conf/nginx.conf
+   64  vim /etc/fdfs/tracker.conf
+   65  reboot now
+   66  ping 39.98.214.72
+   67  vim /etc/fdfs/tracker.conf
+   68  vim /usr/local/nginx/conf/nginx.conf
+   69  fdfs_trackerd /etc/fdfs/tracker.conf start
+   70  ps -ef|grep fdfs
+   71  netstat -unltp | grep fdfs
+   72  /usr/local/nginx/sbin/nginx
+   73  netstat -unltp | grep nginx
+   74  reboot now
+   75  fdfs_trackerd /etc/fdfs/tracker.conf start
+   76  ps -ef|grep fdfs
+   77  netstat -unltp | grep fdfs
+   78  /usr/local/nginx/sbin/nginx
+   79  netstat -unltp | grep nginx
+   80  cd /home/deployment/
+   81  history >> history_tracker.log
