@@ -1,0 +1,91 @@
+    1  yum install git -y
+    2  mkdir /home/deployment
+    3  cd /home/deployment
+    4  git init
+    5  git remote add origin https://github.com/project-min/deployment.git
+    6  git pull origin master
+    7  chmod 777 *.sh
+    8  ./centos.sh
+    9  mkdir /data
+   10  mkdir /data/fastdfs
+   11  mkdir /data/fastdfs/storage
+   12  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   13  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   14  cd /opt/libfastcommon-1.0.39
+   15  /opt/libfastcommon-1.0.39/make.sh
+   16  /opt/libfastcommon-1.0.39/make.sh install
+   17  cd /
+   18  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   19  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   20  cd /opt/fastdfs-5.11
+   21  /opt/fastdfs-5.11/make.sh
+   22  /opt/fastdfs-5.11/make.sh install
+   23  cd /
+   24  ln -s /usr/bin/stop.sh /usr/local/bin
+   25  ln -s /usr/bin/restart.sh /usr/local/bin
+   26  ln -s /usr/bin/fdfs_storaged /usr/local/bin
+   27  systemctl start firewalld
+   28  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   29  firewall-cmd --zone=public --add-port=23000/tcp --permanent
+   30  firewall-cmd --reload
+   31  cp /home/deployment/cluster-config/tracker/storage.conf /etc/fdfs/
+   32  cp /home/deployment/cluster-config/storage/storage.conf /etc/fdfs/
+   33  fdfs_storaged /etc/fdfs/storage.conf restart
+   34  netstat -unltp | grep fdfs
+   35  ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+   36  fdfs_monitor /etc/fdfs/storage.conf
+   37  cd /data
+   38  ls
+   39  cd fastdfs
+   40  cd storage/
+   41  ls
+   42  cd data/
+   43  ls
+   44  cd 00
+   45  ls
+   46  wget -P /opt https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip
+   47  unzip /opt/master.zip -d /opt
+   48  sed -i '6s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   49  sed -i '15s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
+   50  wget -P /opt -c https://nginx.org/download/nginx-1.14.1.tar.gz
+   51  tar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   52  cd /opt/nginx-1.14.1
+   53  ./configure --add-module=/opt/fastdfs-nginx-module-master/src
+   54  make
+   55  cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
+   56  cp /home/deployment/cluster-config/storage/nginx.conf /usr/local/nginx/conf/
+   57  fdfs_storaged /etc/fdfs/storage.conf restart
+   58  netstat -unltp | grep fdfs
+   59  ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+   60  fdfs_monitor /etc/fdfs/storage.conf
+   61  /usr/local/nginx/sbin/nginx
+   62  fdfs_monitor /etc/fdfs/storage.conf
+   63  cd /data/fastdfs/storage/data/00/00/wKgfW
+   64  cd /data/fastdfs/storage/data/00/00/
+   65  los
+   66  ls
+   67  vim /etc/fdfs/storage.conf
+   68  vim /etc/fdfs/mod_fastdfs.conf
+   69  /usr/local/bin/stop.sh /opt/FastDFS/conf/storage.conf
+   70  fdfs_storaged /etc/fdfs/storage.conf restart
+   71  /usr/bin/nginx -s stop
+   72  /usr/local/nginx/sbin/nginx -s stop
+   73  /usr/local/nginx/sbin/nginx
+   74  ls
+   75  firewall-cmd --list-ports
+   76  cat /usr/local/nginx/logs/error.log
+   77  cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
+   78  cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
+   79  /usr/local/nginx/sbin/nginx -s stop
+   80  /usr/local/nginx/sbin/nginx
+   81  cat /usr/local/nginx/logs/error.log
+   82  vim /etc/fdfs/mod_fastdfs.conf
+   83  ls
+   84  reboot now
+   85  cd /home/deployment/
+   86  ls
+   87  cd cluster-config/
+   88  ls
+   89  cd storage/
+   90  ls
+   91  history >> history-1.log
