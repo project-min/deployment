@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
+#IP_ADDRESS=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
 
 ### Create fastdfs folder
 if [ ! -d "/data" ]; then
@@ -36,14 +36,14 @@ if [ ! -d "/opt/fastdfs-5.11" ]; then
 fi
 
 ### Update storage.conf
-if [ ! -f "/etc/fdfs/storage.conf" ]; then
-  cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
+#if [ ! -f "/etc/fdfs/storage.conf" ]; then
+#  cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
   ### vim storage.conf
-  sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
-  sed -i '118d' /etc/fdfs/storage.conf
-  sed -i "118i tracker_server=$IP_ADDRESS:22122" /etc/fdfs/storage.conf
-fi
+#  sed -i '41s/base_path=\/home\/yuqing\/fastdfs/base_path=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  sed -i '109s/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/data\/fastdfs\/storage/g' /etc/fdfs/storage.conf
+#  sed -i '118d' /etc/fdfs/storage.conf
+#  sed -i "118i tracker_server=$IP_ADDRESS:22122" /etc/fdfs/storage.conf
+#fi
 
 #ln -s /usr/bin/fdfs_trackerd /usr/local/bin
 ln -s /usr/bin/stop.sh /usr/local/bin
@@ -69,12 +69,12 @@ if [ ! -d "/opt/fastdfs-nginx-module-master" ]; then
   sed -i '6s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
   sed -i '15s/\/usr\/local\/include/\/usr\/include\/fastdfs \/usr\/include\/fastcommon\//g' /opt/fastdfs-nginx-module-master/src/config
 
-  cp /opt/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs
+  #cp /opt/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs
   ###vim /etc/fdfs/mod_fastdfs.conf
-  sed -i "10s/\/tmp/\/data\/fastdfs\/storage/g" /etc/fdfs/mod_fastdfs.conf
-  sed -i "40s/tracker:22122/$IP_ADDRESS:22122/g" /etc/fdfs/mod_fastdfs.conf
-  sed -i '53s/false/true/g' /etc/fdfs/mod_fastdfs.conf
-  sed -i '62s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/storage/g' /etc/fdfs/mod_fastdfs.conf
+  #sed -i "10s/\/tmp/\/data\/fastdfs\/storage/g" /etc/fdfs/mod_fastdfs.conf
+  #sed -i "40s/tracker:22122/$IP_ADDRESS:22122/g" /etc/fdfs/mod_fastdfs.conf
+  #sed -i '53s/false/true/g' /etc/fdfs/mod_fastdfs.conf
+  #sed -i '62s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/storage/g' /etc/fdfs/mod_fastdfs.conf
 fi
 
 if [ ! -d "/opt/nginx-1.14.1" ]; then
@@ -86,13 +86,16 @@ if [ ! -d "/opt/nginx-1.14.1" ]; then
   make install
 
   ###vim /usr/local/nginx/conf/nginx.conf
-  sed -i "36s/80/8888/g" /usr/local/nginx/conf/nginx.conf
-  sed -i "43s/\//~\/group([0-9])\/M00/g" /usr/local/nginx/conf/nginx.conf
-  sed -i "44s/root   html;/ngx_fastdfs_module;/g" /usr/local/nginx/conf/nginx.conf
-  sed -i "45d " /usr/local/nginx/conf/nginx.conf
+  #sed -i "36s/80/8888/g" /usr/local/nginx/conf/nginx.conf
+  #sed -i "43s/\//~\/group([0-9])\/M00/g" /usr/local/nginx/conf/nginx.conf
+  #sed -i "44s/root   html;/ngx_fastdfs_module;/g" /usr/local/nginx/conf/nginx.conf
+  #sed -i "45d " /usr/local/nginx/conf/nginx.conf
 fi
 
-ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+cp /home/deployment/cluster-config/storage/storage.conf /etc/fdfs/
+cp /home/deployment/cluster-config/storage/nginx.conf /usr/local/nginx/conf/
+cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
+
 
 if [ ! -f "/etc/fdfs/http.conf" ]; then
   cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
@@ -105,13 +108,14 @@ fi
 systemctl start firewalld
 
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
-firewall-cmd --reload
-
 firewall-cmd --zone=public --add-port=23000/tcp --permanent
+
 firewall-cmd --reload
 
+fdfs_storaged /etc/fdfs/storage.conf restart
+/usr/local/nginx/sbin/nginx
 
-#/usr/local/nginx/sbin/nginx
+ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
 
-netstat -unltp|grep fdfs
-
+netstat -unltp | grep fdfs
+netstat -unltp | grep nginx
