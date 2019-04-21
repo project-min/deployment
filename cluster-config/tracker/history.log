@@ -1,0 +1,101 @@
+    1  yum install git -y
+    2  mkdir /home/deployment
+    3  cd /home/deployment
+    4  git init
+    5  git remote add origin https://github.com/project-min/deployment.git
+    6  git pull origin master
+    7  chmod 777 *.sh
+    8  ./centos.sh
+    9  mkdir /data
+   10  mkdir /data/fastdfs
+   11  mkdir /data/fastdfs/tracker
+   12  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   13  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   14  cd /opt/libfastcommon-1.0.39
+   15  /opt/libfastcommon-1.0.39/make.sh
+   16  /opt/libfastcommon-1.0.39/make.sh install
+   17  cd /
+   18  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   19  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   20  cd /opt/fastdfs-5.11
+   21  /opt/fastdfs-5.11/make.sh
+   22  /opt/fastdfs-5.11/make.sh install
+   23  cd /
+   24  ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+   25  ln -s /usr/bin/stop.sh /usr/local/bin
+   26  ln -s /usr/bin/restart.sh /usr/local/bin
+   27  systemctl start firewalld
+   28  firewall-cmd --zone=public --add-port=9090/tcp --permanent
+   29  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   30  firewall-cmd --zone=public --add-port=22122/tcp --permanent
+   31  firewall-cmd --reload
+   32  cd /home/deployment/
+   33  ls
+   34  cd cluster-config/tracker/
+   35  ls
+   36  cp /home/deployment/cluster-config/tracker/tracker.conf /etc/fdfs/
+   37  cd /etc/fdfs
+   38  ls
+   39  cd /home/deployment/
+   40  ls
+   41  cd cluster-config
+   42  ls
+   43  cd tracker
+   44  ls
+   45  fdfs_storaged /etc/fdfs/storage.conf restart
+   46  fdfs_trackerd /etc/fdfs/tracker.conf restart
+   47  fdfs_storaged /etc/fdfs/storage.conf restart
+   48  netstat -unltp | grep fdfs
+   49  cp /etc/fdfs/client.conf.sample /etc/fdfs/client.conf
+   50  sed -i '10s/\/home\/yuqing\/fastdfs/\/data\/fastdfs\/tracker/g' /etc/fdfs/client.conf
+   51  vim /etc/fdfs/client.conf
+   52  ls
+   53  cd ..
+   54  cd /home/
+   55  ls
+   56  vim ppp.txt
+   57  ls
+   58  vim /etc/fdfs/client.conf
+   59  /usr/bin/fdfs_test /etc/fdfs/client.conf upload ppp.txt
+   60  wget -P /opt -c https://nginx.org/download/nginx-1.14.1.tar.gz
+   61  tar xvf /opt/nginx-1.14.1.tar.gz -C /opt
+   62  cd /opt/nginx-1.14.1
+   63  ./configure
+   64  make
+   65  make install
+   66  /usr/local/nginx/sbin/nginx
+   67  netstat -unltp|grep fdfs
+   68  netstat -unltp | grep nginx
+   69  cp /home/deployment/cluster-config/tracker/nginx.conf /usr/local/nginx/conf/
+   70  /usr/local/nginx/sbin/nginx -s stop
+   71  /usr/local/nginx/sbin/nginx
+   72  netstat -unltp | grep nginx
+   73  ls
+   74  cd /home/
+   75  ls
+   76  vim zzz.txt
+   77  /usr/bin/fdfs_test /etc/fdfs/client.conf upload zzz.txt
+   78  ls
+   79  vim xxx.txt
+   80  /usr/bin/fdfs_test /etc/fdfs/client.conf upload xxx.txt
+   81  vim uuu.txt
+   82  /usr/bin/fdfs_test /etc/fdfs/client.conf upload uuu.txt
+   83  vim /etc/fdfs/client.conf
+   84  firewall-cmd --list-ports
+   85  vim /usr/local/nginx/conf/nginx.conf
+   86  ifconfig
+   87  /usr/local/nginx/sbin/nginx
+   88  netstat -unltp | grep nginx
+   89  vim cat /usr/local/nginx/logs/error.log
+   90  vim /usr/local/nginx/logs/error.log
+   91  ls
+   92  cd deployment/
+   93  ls
+   94  cd cluster-config/
+   95  ls
+   96  cd tracker/
+   97  cp /etc/fdfs/tracker.conf ./
+   98  cp /usr/local/nginx/conf/nginx.conf ./
+   99  cd ..
+  100  ls
+  101  history >> history.log
