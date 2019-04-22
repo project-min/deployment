@@ -14,10 +14,10 @@ cp /home/deployment/cluster-config/tracker/nginx.conf /usr/local/nginx/conf/
 
 #systemctl start firewalld
 
-firewall-cmd --zone=public --add-port=8080/tcp --permanent
+#firewall-cmd --zone=public --add-port=8080/tcp --permanent
 
-firewall-cmd --reload
+#firewall-cmd --reload
 
-/usr/local/nginx/sbin/nginx
+#/usr/local/nginx/sbin/nginx
 
-netstat -unltp | grep nginx
+#netstat -unltp | grep nginx

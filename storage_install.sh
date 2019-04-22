@@ -90,11 +90,11 @@ ln -s /usr/bin/fdfs_storaged /usr/local/bin
   #sed -i "43s/\//~\/group([0-9])\/M00/g" /usr/local/nginx/conf/nginx.conf
   #sed -i "44s/root   html;/ngx_fastdfs_module;/g" /usr/local/nginx/conf/nginx.conf
   #sed -i "45d " /usr/local/nginx/conf/nginx.conf
-fi
+#fi
 
 cp /home/deployment/cluster-config/storage/storage.conf /etc/fdfs/
 #cp /home/deployment/cluster-config/storage/nginx.conf /usr/local/nginx/conf/
-cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
+#cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
 
 
 #if [ ! -f "/etc/fdfs/http.conf" ]; then
@@ -107,15 +107,15 @@ cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
 
 systemctl start firewalld
 
-#firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --zone=public --add-port=23000/tcp --permanent
 
 firewall-cmd --reload
 
-fdfs_storaged /etc/fdfs/storage.conf restart
+#fdfs_storaged /etc/fdfs/storage.conf restart
 #/usr/local/nginx/sbin/nginx
 
-ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
+#ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
 
-netstat -unltp | grep fdfs
+#netstat -unltp | grep fdfs
 #netstat -unltp | grep nginx

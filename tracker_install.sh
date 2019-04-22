@@ -71,13 +71,13 @@ cp /home/deployment/cluster-config/tracker/tracker.conf /etc/fdfs/
 systemctl start firewalld
 
 firewall-cmd --zone=public --add-port=9090/tcp --permanent
-#firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --zone=public --add-port=22122/tcp --permanent
 
 firewall-cmd --reload
 
-fdfs_trackerd /etc/fdfs/tracker.conf restart
+#fdfs_trackerd /etc/fdfs/tracker.conf restart
 #/usr/local/nginx/sbin/nginx
 
-netstat -unltp | grep fdfs
+#netstat -unltp | grep fdfs
 #netstat -unltp | grep nginx

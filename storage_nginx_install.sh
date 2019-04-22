@@ -30,6 +30,7 @@ if [ ! -d "/opt/nginx-1.14.1" ]; then
   #sed -i "45d " /usr/local/nginx/conf/nginx.conf
 fi
 
+cp /home/deployment/cluster-config/storage/mod_fastdfs.conf /etc/fdfs/
 cp /home/deployment/cluster-config/storage/nginx.conf /usr/local/nginx/conf/
 
 
@@ -43,10 +44,10 @@ fi
 
 #systemctl start firewalld
 
-firewall-cmd --zone=public --add-port=8080/tcp --permanent
+#firewall-cmd --zone=public --add-port=8080/tcp --permanent
 
-firewall-cmd --reload
+#firewall-cmd --reload
 
-/usr/local/nginx/sbin/nginx
+#/usr/local/nginx/sbin/nginx
 
-netstat -unltp | grep nginx
+#netstat -unltp | grep nginx
