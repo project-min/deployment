@@ -78,14 +78,6 @@ if [ ! -f "/etc/fdfs/client.conf" ]; then
   sed -i "14i tracker_server=$IP_ADDRESS:22122" /etc/fdfs/client.conf
 fi
 
-if [ ! -f "/etc/fdfs/http.conf" ]; then
-  cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
-fi
-
-if [ ! -f "/etc/fdfs/mime.types" ]; then
-  cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
-fi
-
 service fdfs_trackerd start
 service fdfs_storaged start
 
@@ -124,6 +116,13 @@ fi
 
 ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00
 
+if [ ! -f "/etc/fdfs/http.conf" ]; then
+  cp /opt/fastdfs-5.11/conf/http.conf /etc/fdfs/
+fi
+
+if [ ! -f "/etc/fdfs/mime.types" ]; then
+  cp /opt/fastdfs-5.11/conf/mime.types /etc/fdfs/
+fi
 
 firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --reload
