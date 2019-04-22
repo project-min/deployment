@@ -1,0 +1,64 @@
+    1  yum install git -y
+    2  git config --global user.email "project.min@outlook.com"
+    3  git config --global user.name "Ye Min"
+    4  mkdir /home/deployment
+    5  cd /home/deployment
+    6  git init
+    7  git remote add origin https://github.com/project-min/deployment.git
+    8  git pull origin master
+    9  chmod 777 *.sh
+   10  ./centos.sh
+   11  mkdir /data
+   12  mkdir /data/fastdfs
+   13  mkdir /data/fastdfs/storage
+   14  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   15  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   16  cd /opt/libfastcommon-1.0.39
+   17  /opt/libfastcommon-1.0.39/make.sh
+   18  /opt/libfastcommon-1.0.39/make.sh install
+   19  cd /
+   20  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   21  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   22  cd /opt/fastdfs-5.11
+   23  /opt/fastdfs-5.11/make.sh
+   24  /opt/fastdfs-5.11/make.sh install
+   25  cd /
+   26  ln -s /usr/bin/stop.sh /usr/local/bin
+   27  ln -s /usr/bin/restart.sh /usr/local/bin
+   28  ln -s /usr/bin/fdfs_storaged /usr/local/bin
+   29  systemctl start firewalld
+   30  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   31  firewall-cmd --zone=public --add-port=23000/tcp --permanent
+   32  firewall-cmd --reload
+   33  cp /home/deployment/cluster-config/storage/storage.conf /etc/fdfs/
+   34  vim /etc/fdfs/storage.conf
+   35  fdfs_storaged /etc/fdfs/storage.conf restart
+   36  netstat -unltp | grep fdfs
+   37  fdfs_monitor /etc/fdfs/storage.conf
+   38  netstat -unltp | grep fdfs
+   39  fdfs_monitor /etc/fdfs/storage.conf
+   40  vim /etc/fdfs/storage.conf
+   41  /usr/local/bin/stop.sh /opt/FastDFS/conf/storage.conf
+   42  fdfs_storaged /etc/fdfs/storage.conf restart
+   43  fdfs_monitor /etc/fdfs/storage.conf
+   44  cd /home/deployment/
+   45  ls
+   46  ./storage_nginx_install.sh 
+   47  /usr/local/nginx/sbin/nginx
+   48  netstat -unltp | grep nginx
+   49  vim /etc/fdfs/mod_fastdfs.conf
+   50  vim /etc/fdfs/storage.conf
+   51  netstat -unltp | grep fdfs
+   52  cd /data/fastdfs/storage/data/00/00/
+   53  ls
+   54  cd /home/deployment/
+   55  ls
+   56  git pull origin master
+   57  chmod 640 *.sh
+   58  rm deploy.sh
+   59  git pull origin master
+   60  cd cluster-config2
+   61  ls
+   62  mkdir storage-2
+   63  cd storage-2
+   64  history >> history.log
