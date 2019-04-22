@@ -1,0 +1,53 @@
+    1  yum install git -y
+    2  git config --global user.email "project.min@outlook.com"
+    3  git config --global user.name "Ye Min"
+    4  mkdir /home/deployment
+    5  cd /home/deployment
+    6  git init
+    7  git remote add origin https://github.com/project-min/deployment.git
+    8  git pull origin master
+    9  chmod 777 *.sh
+   10  ./centos.sh
+   11  mkdir /data
+   12  mkdir /data/fastdfs
+   13  mkdir /data/fastdfs/tracker
+   14  wget -P /opt https://github.com/happyfish100/libfastcommon/archive/V1.0.39.tar.gz
+   15  tar -zxvf /opt/V1.0.39.tar.gz -C /opt
+   16  cd /opt/libfastcommon-1.0.39
+   17  /opt/libfastcommon-1.0.39/make.sh
+   18  /opt/libfastcommon-1.0.39/make.sh install
+   19  cd /
+   20  wget -P /opt https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
+   21  tar -zxvf /opt/V5.11.tar.gz -C /opt
+   22  cd /opt/fastdfs-5.11
+   23  /opt/fastdfs-5.11/make.sh
+   24  /opt/fastdfs-5.11/make.sh install
+   25  cd /
+   26  ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+   27  ln -s /usr/bin/stop.sh /usr/local/bin
+   28  ln -s /usr/bin/restart.sh /usr/local/bin
+   29  cp /home/deployment/cluster-config/tracker/tracker.conf /etc/fdfs/
+   30  systemctl start firewalld
+   31  firewall-cmd --zone=public --add-port=9090/tcp --permanent
+   32  firewall-cmd --zone=public --add-port=22122/tcp --permanent
+   33  firewall-cmd --reload
+   34  fdfs_trackerd /etc/fdfs/tracker.conf restart
+   35  netstat -unltp | grep fdfs
+   36  ls
+   37  cd /home/deployment/
+   38  ./tracker_nginx_install.sh 
+   39  /usr/local/nginx/sbin/nginx
+   40  netstat -unltp | grep nginx
+   41  netstat -unltp | grep fdfs
+   42  firewall-cmd --list-ports
+   43  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+   44  firewall-cmd --reload
+   45  history
+   46  cd /home/deployment/
+   47  ls
+   48  mkdir cluster-config2
+   49  cd cluster-config2
+   50  ls
+   51  mkdir tracker
+   52  cd tracker
+   53  history >> history.log
